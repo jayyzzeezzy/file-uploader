@@ -15,6 +15,11 @@ app.set("view engine", "ejs");
 
 // set up session persistence
 
+
+// Static file support: CSS fiels
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+
 // apply routers
 app.use("/", indexRouter);
 

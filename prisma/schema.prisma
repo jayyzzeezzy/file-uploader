@@ -21,3 +21,10 @@ model User {
 
   @@map("user")
 }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String   @db.Text // MediumText may be needed for MySql
+  expiresAt DateTime
+}

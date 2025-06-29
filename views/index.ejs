@@ -1,4 +1,3 @@
-<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,5 +8,39 @@
 </head>
 <body>
   <p>Index page</p>
+  <div class="index-container">
+    <% if (locals.currentUser) {%>
+      <h1>WELCOME BACK <%= currentUser.username %></h1>
+        <a href="/home">
+          <button class="home-btn">
+            Home
+          </button>
+        </a>
+        <a href="/log-out">
+          <button class="logout-btn">
+            Log out
+          </button>
+        </a>
+    <% } else { %>
+      <h1 class="form-header">Log in</h1>
+      <form action="/log-in" method="POST" class="login-form">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" />
+        <button type="submit" class="login-btn">Log In</button>
+      </form>
+      <div class="signup-container">
+        <h4>
+          Or sign up for an account:
+        </h4>
+        <a href="/sign-up" class="signup-link">
+          <button class="signup-btn">
+            Sign Up
+          </button>
+        </a>
+      </div>
+    <%}%>
+  </div>
 </body>
 </html>

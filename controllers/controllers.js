@@ -56,6 +56,12 @@ exports.getHome = async (req, res) => {
     res.render("home");
 }
 
+exports.postUpload = async (req, res) => {
+    const file = req.file;
+    console.log(req.file);
+    res.redirect("/home");
+};
+
 exports.getLogOut = (req, res, next) => {
     req.logout((err) => {
         if (err) {

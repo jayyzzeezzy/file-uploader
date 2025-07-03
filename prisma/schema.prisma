@@ -27,4 +27,6 @@ model Session {
   sid       String   @unique
   data      String   @db.Text // MediumText may be needed for MySql
   expiresAt DateTime
+
+  @@map("session")
 }

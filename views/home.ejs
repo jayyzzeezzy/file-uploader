@@ -12,6 +12,11 @@
   <div class="message-board">
     <% if (locals.currentUser) {%>
       <p>this is home page</p>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="upload">Upload file:</label>
+        <input type="file" id="upload" name="upload">
+        <input type="submit" value="Upload">
+      </form>
     <% } else { %>
       <h1>please log in</h1>
       <a href="/">Log In</a>

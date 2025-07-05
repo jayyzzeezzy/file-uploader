@@ -15,9 +15,12 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  files     File[]
+  folders   Folder[]
 
   @@map("user")
 }
@@ -29,4 +32,32 @@ model Session {
   expiresAt DateTime
 
   @@map("session")
+}
+
+model File {
+  id          String   @id @default(cuid())
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ownership   User     @relation(fields: [ownershipId], references: [id]) // pk: user(homepage), fk: files
+  ownershipId Int
+  folder      Folder?  @relation(fields: [folderId], references: [id]) // pk: folder, fk: childFiles
+  folderId    String
+
+  @@map("file")
+}
+
+model Folder {
+  id             String   @id @default(cuid())
+  name           String   @db.VarChar(20)
+  ownership      User     @relation(fields: [ownershipId], references: [id]) // pk: user (homepage), fk: folder
+  ownershipId    Int
+  childFiles     File[]
+  childFolder    Folder[] @relation("FolderToFolder")
+  parentFolder   Folder?  @relation("FolderToFolder", fields: [parentFolderId], references: [id]) // pk: folder, fk: folder; need to add a name to distinguish 
+  parentFolderId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("folder")
 }

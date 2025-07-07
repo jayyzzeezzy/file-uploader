@@ -59,8 +59,15 @@ exports.getHome = async (req, res) => {
 exports.postUpload = async (req, res) => {
     const file = req.file;
     console.log(req.file);
-    res.redirect("/home");
+    res.render("home");
 };
+
+exports.getNewFolder = async (req, res) => {
+    const { userId } = req.params;
+    console.log(`userId: ${userId}`);
+    const added = await db.addAFolder("test", parseInt(userId), userId);
+    res.render("folder", { result: added });
+}
 
 exports.getLogOut = (req, res, next) => {
     req.logout((err) => {

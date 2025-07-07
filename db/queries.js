@@ -1,4 +1,5 @@
 // import Primsa Client
+const { name } = require('ejs');
 const { PrismaClient } = require('../generated/prisma/client');
 const prisma = new PrismaClient();
 
@@ -28,4 +29,23 @@ exports.findUserById = async (id = null) => {
         },
     });
     return user;
+};
+
+exports.addAFolder = async (folderName, userId, parentId) => {
+    const add = await prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            folders: {
+                create: {
+                    name: folderName,
+                }
+            }
+        },
+        include: {
+            folders: true,
+        },
+    });
+    return add;
 };

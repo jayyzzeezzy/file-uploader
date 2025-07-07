@@ -48,16 +48,18 @@ model File {
 }
 
 model Folder {
-  id             String   @id @default(cuid())
-  name           String   @db.VarChar(20)
-  ownership      User     @relation(fields: [ownershipId], references: [id]) // pk: user (homepage), fk: folder
-  ownershipId    Int
-  childFiles     File[]
-  childFolder    Folder[] @relation("FolderToFolder")
-  parentFolder   Folder?  @relation("FolderToFolder", fields: [parentFolderId], references: [id]) // pk: folder, fk: folder; need to add a name to distinguish 
-  parentFolderId String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id          String @id @default(cuid())
+  name        String @default("New Folder") @db.VarChar(20)
+  ownership   User   @relation(fields: [ownershipId], references: [id]) // pk: user (homepage), fk: folder
+  ownershipId Int
+  files       File[] //children files
+
+  parentId String?
+  parent   Folder?  @relation("ParentChildren", fields: [parentId], references: [id]) // pk: folder, fk: folder; need to add a name to distinguish 
+  children Folder[] @relation("ParentChildren")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("folder")
 }

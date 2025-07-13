@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles.css">
+  <script defer src="/script.js"></script>
   <title>Home</title>
 </head>
 <body>
@@ -12,11 +13,9 @@
   <div class="message-board">
     <% if (locals.currentUser) {%>
       <p>this is home page</p>
-      <a href="/new-folder/<%= currentUser.id %>">
-        <button>
-          New Folder
-        </button>
-      </a>
+      <button class="newFolderBtn">
+        New Folder
+      </button>
       <form action="/upload" method="post" enctype="multipart/form-data">
         <label for="upload">Upload file:</label>
         <input type="file" id="upload" name="upload">
@@ -28,6 +27,15 @@
     <%}%>
   </div>
 
-</div>
+  </div>
+
+  <dialog class="modal" id="modal">
+    <form action="/new-folder" method="post">
+      <label for="folderName" class="modal-message">New folder</label>
+      <input type="text" id="folderName" name="folderName" value="new folder">
+      <button type="button" class="cancelBtn">Cancel</button>
+      <input type="submit" value="Create" class="createBtn">
+    </form>
+  </dialog>
 </body>
 </html>

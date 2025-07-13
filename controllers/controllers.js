@@ -63,9 +63,16 @@ exports.postUpload = async (req, res) => {
 };
 
 exports.getNewFolder = async (req, res) => {
-    const { userId } = req.params;
-    console.log(`userId: ${userId}`);
-    const added = await db.addAFolder("test", parseInt(userId), userId);
+    const userId = req.user.id;
+    const folders = await db.getAllFolders(userId);
+    res.render("folder", { result: folders });
+}
+
+exports.postNewFolder = async (req, res) => {
+    const userId = req.user.id;
+    const { folderName } = req.body;
+    // console.log(userId);
+    const added = await db.addAFolder(folderName, userId);
     res.render("folder", { result: added });
 }
 

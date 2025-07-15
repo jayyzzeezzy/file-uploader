@@ -25,6 +25,13 @@
       <h1>please log in</h1>
       <a href="/">Log In</a>
     <%}%>
+
+    <% if (locals.results) {%>
+      <p>results exist</p>
+      <% results.folders.forEach((folder) => { %>
+        <p>folder name: <%= folder.name %></p>
+      <% }) %>
+    <%}%>
   </div>
 
   </div>

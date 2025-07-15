@@ -53,7 +53,10 @@ exports.getSignUp = (req, res) => {
 
 exports.getHome = async (req, res) => {
     // const files = await db.getAllFiles();
-    res.render("home");
+    const userId = req.user.id;
+    const folders = await db.getAllFolders(userId);
+    // console.log(folders);
+    res.render("home", { results: folders });
 }
 
 exports.postUpload = async (req, res) => {

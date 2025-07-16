@@ -1,12 +1,29 @@
-const modal = document.querySelector("#modal");
-const cancelBtn = document.querySelector(".cancelBtn");
+const newfolderModal = document.querySelector("#newfolderModal");
+const cancelNewFolderBtn = document.querySelector(".cancelNewFolderBtn");
 const newFolderBtn = document.querySelector(".newFolderBtn");
 
-cancelBtn.addEventListener("click", () => {
-    modal.close();
+const uploadModal = document.querySelector("#uploadModal");
+const cancelUploadBtn = document.querySelector(".cancelUploadBtn");
+const uploadBtn = document.querySelector(".uploadBtn");
+
+/*
+* ------------- new folder modal ---------------------
+*/ 
+cancelNewFolderBtn.addEventListener("click", () => {
+    newfolderModal.close();
 });
 
 newFolderBtn.addEventListener("click", () => {
-    modal.showModal();
+    newfolderModal.showModal();
 });
 
+/*
+* ------------- upload modal ------------------------
+*/ 
+cancelUploadBtn.addEventListener("click", () => {
+    uploadModal.close();
+});
+
+uploadBtn.addEventListener("click", () => {
+    uploadModal.showModal();
+});

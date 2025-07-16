@@ -43,6 +43,11 @@ exports.postSignUp = [
     }
 ];
 
+exports.isAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) return next();
+    res.redirect('/');
+}
+
 exports.getIndex = (req, res) => {
     res.render("index");
 };

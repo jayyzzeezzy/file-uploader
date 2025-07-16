@@ -1,0 +1,8 @@
+.home-layout {
+    display: flex;
+}
+
+.sidebarButtons {
+    display: flex;
+    flex-direction: column;
+}

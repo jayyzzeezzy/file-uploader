@@ -5,43 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles.css">
   <script defer src="/script.js"></script>
-  <title>Home</title>
+  <title>File Uploader</title>
 </head>
 <body>
   <div class="home-container">
+    <header class="header">File Uploader</header>
 
-  <div class="message-board">
-    <% if (locals.currentUser) {%>
-      <p>this is home page</p>
-      <button class="newFolderBtn">
-        New Folder
-      </button>
-      <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="upload">Upload file:</label>
-        <input type="file" id="upload" name="upload">
-        <input type="submit" value="Upload">
-      </form>
-    <% } else { %>
-      <h1>please log in</h1>
-      <a href="/">Log In</a>
-    <%}%>
+    <div class="home-layout">
+      <aside class="aside">
+        <%- include("sidebar"); %>
+      </aside>
 
-    <% if (locals.results) {%>
-      <p>results exist</p>
-      <% results.folders.forEach((folder) => { %>
-        <p>folder name: <%= folder.name %></p>
-      <% }) %>
-    <%}%>
+      <main class="main">
+        <nav></nav>
+        <div class="message-board">
+          <% if (locals.results) {%>
+            <p>navbar goes here</p>
+            <div class="folder-container">
+              <% results.folders.forEach((folder) => { %>
+                <%- include("ownerFiles", {folder: folder}); %>
+              <% }) %>
+            </div>
+          <%}%>
+        </div>
+      </main>
+    </div>
+    
   </div>
 
-  </div>
-
-  <dialog class="modal" id="modal">
+  <dialog class="newfolderModal" id="newfolderModal">
     <form action="/new-folder" method="post">
       <label for="folderName" class="modal-message">New folder</label>
       <input type="text" id="folderName" name="folderName" value="new folder">
-      <button type="button" class="cancelBtn">Cancel</button>
+      <button type="button" class="cancelNewFolderBtn">Cancel</button>
       <input type="submit" value="Create" class="createBtn">
+    </form>
+  </dialog>
+
+  <dialog class="uploadModal" id="uploadModal">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <label for="upload">Upload a file:</label>
+      <input type="file" id="upload" name="upload">
+      <button type="button" class="cancelUploadBtn">Cancel</button>
+      <input type="submit" value="Upload">
     </form>
   </dialog>
 </body>

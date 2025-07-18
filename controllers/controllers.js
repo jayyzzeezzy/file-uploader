@@ -66,7 +66,7 @@ exports.getHome = async (req, res) => {
 
 exports.postUpload = async (req, res) => {
     const file = req.file;
-    console.log(req.file);
+    console.log(`uploaded file: ${req.file}`);
     res.render("home");
 };
 
@@ -87,11 +87,20 @@ exports.getFolderInfo = async (req, res) => {
     const { folderId } = req.params;
     const folderPath = await db.getFolderPath(userId, folderId);
     
-    console.log(folderPath);
+    // console.log("folderPath: ", folderPath);
     res.render("folder", {
         folderId,
         folderPath,
     });
+}
+
+exports.postFolderToFolder = async (req, res) => {
+    const userId = req.user.id;
+    const { folderId } = req.params;
+    const { folderName } = req.body;
+    const folder = await db.addFolderToFolder(folderName, userId, folderId);
+    console.log("addFolderToFolder: ", folder);
+    res.redirect(`/folder/${folderId}`);
 }
 
 exports.getLogOut = (req, res, next) => {

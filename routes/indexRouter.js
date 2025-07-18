@@ -10,6 +10,7 @@ indexRouter.get("/home", isAuthenticated, controllers.getHome);
 indexRouter.post("/upload", isAuthenticated, upload.single('upload'), controllers.postUpload);
 indexRouter.get("/new-folder", isAuthenticated, controllers.getNewFolder);
 indexRouter.post("/new-folder", isAuthenticated, controllers.postNewFolder);
+indexRouter.post("/new-folder/:folderId", isAuthenticated, controllers.postFolderToFolder);
 indexRouter.get("/folder/:folderId", isAuthenticated, controllers.getFolderInfo);
 
 module.exports = indexRouter;

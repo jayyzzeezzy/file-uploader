@@ -38,7 +38,7 @@
   </div>
 
   <dialog class="newfolderModal" id="newfolderModal">
-    <form action="/new-folder" method="post">
+    <form action="/new-folder/<%= folderId %>" method="post">
       <label for="folderName" class="modal-message">New folder</label>
       <input type="text" id="folderName" name="folderName" value="new folder">
       <button type="button" class="cancelNewFolderBtn">Cancel</button>
@@ -47,7 +47,7 @@
   </dialog>
 
   <dialog class="uploadModal" id="uploadModal">
-    <form action="/upload" method="post" enctype="multipart/form-data">
+    <form action="/upload/<%= folderId %>" method="post" enctype="multipart/form-data">
       <label for="upload">Upload a file:</label>
       <input type="file" id="upload" name="upload">
       <button type="button" class="cancelUploadBtn">Cancel</button>

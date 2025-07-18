@@ -85,8 +85,8 @@ exports.findNewestFolderId = async (userId) => {
     });
     // find its id
     const folderId = folder.folders[0].id;
-    console.log(folder);
-    console.log(folderId);
+    // console.log(folder);
+    // console.log(folderId);
     return folderId;
 };
 
@@ -109,4 +109,15 @@ exports.getFolderPath = async (userId, folderId, array = []) => {
     } else {
         return await this.getFolderPath(userId, folder.parentId, array);
     }
+}
+
+exports.addFolderToFolder = async (folderName, ownershipId, parentId) => {
+    const folder = await prisma.folder.create({
+        data: {
+            name: folderName,
+            ownershipId: ownershipId,
+            parentId: parentId,
+        },
+    });
+    return folder;
 }

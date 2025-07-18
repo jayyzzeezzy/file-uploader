@@ -71,17 +71,15 @@ exports.postUpload = async (req, res) => {
 };
 
 exports.getNewFolder = async (req, res) => {
-    const userId = req.user.id;
-    const folders = await db.getAllFolders(userId);
-    res.render("folder", { result: folders });
+    res.redirect("/home");
 }
 
 exports.postNewFolder = async (req, res) => {
     const userId = req.user.id;
     const { folderName } = req.body;
     // console.log(userId);
-    const added = await db.addAFolder(folderName, userId);
-    res.render("folder", { result: added });
+    await db.addAFolder(folderName, userId);
+    res.redirect("/home");
 }
 
 exports.getLogOut = (req, res, next) => {

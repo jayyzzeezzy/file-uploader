@@ -13,14 +13,15 @@
 
     <div class="home-layout">
       <aside class="aside">
-        <%- include("sidebar"); %>
+        <%- include("sidebarHome"); %>
       </aside>
 
       <main class="main">
-        <nav></nav>
-        <div class="message-board">
+        <nav class="navFolders">
+          <a href="/home"><%= currentUser.username %></a>
+        </nav>
+        <div class="foldersFiles">
           <% if (locals.results) {%>
-            <p>navbar goes here</p>
             <div class="folder-container">
               <% results.folders.forEach((folder) => { %>
                 <%- include("ownerFiles", {folder: folder}); %>

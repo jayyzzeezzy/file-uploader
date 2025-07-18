@@ -82,6 +82,18 @@ exports.postNewFolder = async (req, res) => {
     res.redirect("/home");
 }
 
+exports.getFolderInfo = async (req, res) => {
+    const userId = req.user.id;
+    const { folderId } = req.params;
+    const folderPath = await db.getFolderPath(userId, folderId);
+    
+    console.log(folderPath);
+    res.render("folder", {
+        folderId,
+        folderPath,
+    });
+}
+
 exports.getLogOut = (req, res, next) => {
     req.logout((err) => {
         if (err) {

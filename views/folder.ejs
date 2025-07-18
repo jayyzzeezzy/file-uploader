@@ -19,6 +19,12 @@
       <main class="main">
         <nav class="navFolders">
           <a href="/home"><%= currentUser.username %></a>
+          <% if (folderPath) { %>
+            <% folderPath.forEach((folder) => { %>
+              <img class="next-pointer" src="/next-pointer.svg" alt="">
+              <a href="/folder/<%= folder.id %>"><%= folder.name %></a>
+            <% }) %>
+          <% } %>
         </nav>
         <div class="foldersFiles">
           <!-- <% if (locals.results) {%>

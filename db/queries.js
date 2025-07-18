@@ -89,3 +89,24 @@ exports.findNewestFolderId = async (userId) => {
     console.log(folderId);
     return folderId;
 };
+
+exports.getFolderPath = async (userId, folderId, array = []) => {
+    if (!folderId) return array;
+
+    const folder = await prisma.folder.findFirst({
+        where: {
+          id: folderId,
+          ownershipId: userId,
+        },
+    });
+
+    if (!folder) return;
+
+    array.push(folder);
+    
+    if (!folder.parentId) {
+        return array.reverse();
+    } else {
+        return await this.getFolderPath(userId, folder.parentId, array);
+    }
+}

@@ -27,10 +27,13 @@
           <% } %>
         </nav>
         <div class="foldersFiles">
-          <!-- <% if (locals.results) {%>
+          <% if (locals.results) {%>
             <div class="folder-container">
+              <% results.forEach((folder) => { %>
+                <%- include("parentChildFolder", {folder: folder}); %>
+              <% }) %>
             </div>
-          <%}%> -->
+          <%}%>
         </div>
       </main>
     </div>

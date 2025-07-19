@@ -85,9 +85,11 @@ exports.getFolderInfo = async (req, res) => {
     const userId = req.user.id;
     const { folderId } = req.params;
     const folderPath = await db.getFolderPath(userId, folderId);
-    
+    const folders = await db.readParentChildFolders(userId, folderId);
     // console.log("folderPath: ", folderPath);
+    // console.log("parentChildFolders: ", folders);
     res.render("folder", {
+        results: folders,
         folderId,
         folderPath,
     });

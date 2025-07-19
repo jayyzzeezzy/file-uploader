@@ -83,6 +83,19 @@ exports.readHomeFolders = async (userId, parentId = null) => {
     return folders;
 }
 
+exports.readParentChildFolders = async (userId, parentId) => {
+    const folders = await prisma.folder.findMany({
+        where: {
+            ownershipId: userId,
+            parentId: parentId,
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+    return folders;
+}
+
 exports.findNewestFolderId = async (userId) => {
     // find the newly created folder
     const folder = await prisma.user.findFirst({

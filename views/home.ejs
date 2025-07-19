@@ -23,7 +23,7 @@
         <div class="foldersFiles">
           <% if (locals.results) {%>
             <div class="folder-container">
-              <% results.folders.forEach((folder) => { %>
+              <% results.forEach((folder) => { %>
                 <%- include("ownerFiles", {folder: folder}); %>
               <% }) %>
             </div>

@@ -68,6 +68,21 @@ exports.getAllFolders = async (userId) => {
     return folders;
 };
 
+// currentUser is the root folder
+// this query will only find the next one level down childFolders
+exports.readHomeFolders = async (userId, parentId = null) => {
+    const folders = await prisma.folder.findMany({
+        where: {
+            ownershipId: userId,
+            parentId: parentId,
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+    return folders;
+}
+
 exports.findNewestFolderId = async (userId) => {
     // find the newly created folder
     const folder = await prisma.user.findFirst({

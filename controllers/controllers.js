@@ -59,8 +59,7 @@ exports.getSignUp = (req, res) => {
 exports.getHome = async (req, res) => {
     // const files = await db.getAllFiles();
     const userId = req.user.id;
-    const folders = await db.getAllFolders(userId);
-    // console.log(folders);
+    const folders = await db.readHomeFolders(userId);
     res.render("home", { results: folders });
 }
 

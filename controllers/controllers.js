@@ -115,6 +115,13 @@ exports.postRenameFolder = async (req, res) => {
     res.redirect(`/folder/${folderId}`);
 }
 
+exports.postDeleteFolder = async (req, res) => {
+    const userId = req.user.id;
+    const { folderId } = req.params;
+    const folder = await db.deleteFolder(userId, folderId);
+    res.redirect("/home");
+}
+
 exports.getLogOut = (req, res, next) => {
     req.logout((err) => {
         if (err) {

@@ -10,6 +10,10 @@ const renameModal = document.querySelector("#renameModal");
 const cancelRenameBtn = document.querySelector(".cancelRenameBtn");
 const renameBtn = document.querySelector(".renameBtn");
 
+const deleteModal = document.querySelector("#deleteModal");
+const cancelDeleteBtn = document.querySelector(".cancelDeleteBtn");
+const deleteFolderBtn = document.querySelector(".deleteFolderBtn");
+
 /*
 * ------------- new folder modal ---------------------
 */ 
@@ -38,4 +42,14 @@ cancelUploadBtn.addEventListener("click", () => {
 });
 uploadBtn.addEventListener("click", () => {
     uploadModal.showModal();
+});
+
+/*
+* ------------- delete modal -------------------------
+*/
+cancelDeleteBtn.addEventListener("click", () => {
+    deleteModal.close();
+});
+deleteFolderBtn.addEventListener("click", () => {
+    deleteModal.showModal();
 });

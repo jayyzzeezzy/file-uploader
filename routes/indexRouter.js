@@ -13,5 +13,6 @@ indexRouter.post("/new-folder", isAuthenticated, controllers.postNewFolder);
 indexRouter.get("/folder/:folderId", isAuthenticated, controllers.getFolderInfo);
 indexRouter.post("/new-folder/:folderId", isAuthenticated, controllers.postFolderToFolder);
 indexRouter.post("/rename/:folderId", isAuthenticated, controllers.postRenameFolder);
+indexRouter.post("/delete/:folderId", isAuthenticated, controllers.postDeleteFolder);
 
 module.exports = indexRouter;

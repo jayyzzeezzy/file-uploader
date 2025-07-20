@@ -172,3 +172,32 @@ exports.readFolder = async (userId, folderId) => {
     });
     return folder;
 }
+
+exports.deleteFolder = async (userId, folderId, array = []) => {
+    array.push(folderId);
+
+    const childrenFolders = await prisma.folder.findMany({
+        where: {
+          ownershipId: userId,
+          parentId: folderId,
+        },
+    });
+
+    await Promise.all(
+        childrenFolders.map((folder) => this.deleteFolder(userId, folder.id, array)),
+    );
+
+    if (folderId === array[0]) {
+        await prisma.$transaction(async (tx) => {
+            await tx.folder.deleteMany({
+                where: {
+                  id: {
+                    in: array,
+                  },
+                },
+            });
+        });
+        return { deletedFolders: array.length };
+    };
+    return null;
+}

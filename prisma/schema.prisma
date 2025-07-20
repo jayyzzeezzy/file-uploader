@@ -50,7 +50,7 @@ model File {
 
 model Folder {
   id          String @id @default(cuid())
-  name        String @default("New Folder") @db.VarChar(20)
+  name        String @default("New Folder") @db.VarChar(50)
   ownership   User   @relation(fields: [ownershipId], references: [id]) // pk: user (homepage), fk: folder
   ownershipId Int
   files       File[] //children files

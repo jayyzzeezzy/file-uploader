@@ -149,3 +149,26 @@ exports.addFolderToFolder = async (folderName, ownershipId, parentId) => {
     });
     return folder;
 }
+
+exports.renameFolder = async (userId, folderId, newName) => {
+    const folder = await prisma.folder.update({
+        where: {
+            ownershipId: userId,
+            id: folderId,
+        },
+        data: {
+            name: newName,
+        },
+    });
+    return folder;
+}
+
+exports.readFolder = async (userId, folderId) => {
+    const folder = await prisma.folder.findFirst({
+        where: {
+            ownershipId: userId,
+            id: folderId,
+        }
+    });
+    return folder;
+}

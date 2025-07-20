@@ -58,6 +58,15 @@
     </form>
   </dialog>
 
+  <dialog class="renameModal" id="renameModal">
+    <form action="/rename/<%= folderId %>" method="post">
+      <label for="newName" class="modal-message">Rename</label>
+      <input type="text" id="newName" name="newName" value="<%= currentFolder.name %>">
+      <button type="button" class="cancelRenameBtn">Cancel</button>
+      <input type="submit" value="Rename" class="renameBtn">
+    </form>
+  </dialog>
+
   <!-- <dialog class="deleteModal" id="deleteModal">
     <form action="/delete/" method="post">
       <p class="deleteMessage">Are you sure you want to delete this?</p>

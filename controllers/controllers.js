@@ -84,6 +84,7 @@ exports.postNewFolder = async (req, res) => {
 exports.getFolderInfo = async (req, res) => {
     const userId = req.user.id;
     const { folderId } = req.params;
+    const currentFolder = await db.readFolder(userId, folderId);
     const folderPath = await db.getFolderPath(userId, folderId);
     const folders = await db.readParentChildFolders(userId, folderId);
     // console.log("folderPath: ", folderPath);
@@ -92,6 +93,7 @@ exports.getFolderInfo = async (req, res) => {
         results: folders,
         folderId,
         folderPath,
+        currentFolder,
     });
 }
 
@@ -101,6 +103,15 @@ exports.postFolderToFolder = async (req, res) => {
     const { folderName } = req.body;
     const folder = await db.addFolderToFolder(folderName, userId, folderId);
     console.log("addFolderToFolder: ", folder);
+    res.redirect(`/folder/${folderId}`);
+}
+
+exports.postRenameFolder = async (req, res) => {
+    const userId = req.user.id;
+    const { folderId } = req.params;
+    const { newName } = req.body;
+    const folder = await db.renameFolder(userId, folderId, newName);
+    console.log("renamed folder: ", folder);
     res.redirect(`/folder/${folderId}`);
 }
 

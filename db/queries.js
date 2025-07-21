@@ -201,3 +201,21 @@ exports.deleteFolder = async (userId, folderId, array = []) => {
     };
     return null;
 }
+
+/*
+* ---------------- file queries ---------------------------
+*/
+exports.addAFile = async (filename, originalName, fileType, path, userId, folderId = null) => {
+    const file = await prisma.file.create({
+        data: {
+            name: filename,
+            originalName: originalName,
+            fileType: fileType,
+            path: path,
+            ownershipId: userId,
+            folderId: folderId,
+        },
+    });
+    console.log("added file: ", file);
+    return file;
+}

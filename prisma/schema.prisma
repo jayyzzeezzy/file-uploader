@@ -36,14 +36,17 @@ model Session {
 }
 
 model File {
-  id          String   @id @default(cuid())
-  name        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  ownership   User     @relation(fields: [ownershipId], references: [id]) // pk: user(homepage), fk: files
-  ownershipId Int
-  folder      Folder?  @relation(fields: [folderId], references: [id]) // pk: folder, fk: childFiles
-  folderId    String?
+  id           String   @id @default(cuid())
+  name         String
+  originalName String
+  fileType     String
+  path         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  ownership    User     @relation(fields: [ownershipId], references: [id]) // pk: user(homepage), fk: files
+  ownershipId  Int
+  folder       Folder?  @relation(fields: [folderId], references: [id]) // pk: folder, fk: childFiles
+  folderId     String?
 
   @@map("file")
 }

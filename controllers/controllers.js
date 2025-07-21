@@ -57,17 +57,28 @@ exports.getSignUp = (req, res) => {
 };
 
 exports.getHome = async (req, res) => {
-    // const files = await db.getAllFiles();
     const userId = req.user.id;
+    // const files = await db.readHomeFiles(userId);
     const folders = await db.readHomeFolders(userId);
     res.render("home", { results: folders });
 }
 
 exports.postUploadHome = async (req, res) => {
-    const file = req.file;
-    console.log(`uploaded file: ${file}`);
+    const userId = req.user.id;
+    const { filename, originalname, mimetype, path } = req.file;
+    console.log("uploaded file to home: ", req.file);
+    const add = db.addAFile(filename, originalname, mimetype, path, userId);
     res.redirect("/home");
 };
+
+exports.postUploadFolder = async (req, res) => {
+    const userId = req.user.id;
+    const { folderId } = req.params;
+    const { filename, originalname, mimetype, path } = req.file;
+    console.log("uploaded file to folder: ", req.file);
+    const add = db.addAFile(filename, originalname, mimetype, path, userId, folderId);
+    res.redirect(`/folder/${folderId}`);
+}
 
 exports.getNewFolder = async (req, res) => {
     res.redirect("/home");

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles.css">
-  <script defer src="/script.js"></script>
+  <script defer src="/homeScript.js"></script>
   <title>File Uploader</title>
 </head>
 <body>
@@ -43,12 +43,12 @@
     </form>
   </dialog>
 
-  <dialog class="uploadModal" id="uploadModal">
+  <dialog class="newFileModal" id="newFileModal">
     <form action="/upload" method="post" enctype="multipart/form-data">
-      <label for="upload">Upload a file:</label>
-      <input type="file" id="upload" name="upload">
-      <button type="button" class="cancelUploadBtn">Cancel</button>
-      <input type="submit" value="Upload">
+      <label for="newFile">New file:</label>
+      <input type="file" id="newFile" name="newFile">
+      <button type="button" class="cancelNewFile">Cancel</button>
+      <input type="submit" value="Upload" class="confirmNewFile">
     </form>
   </dialog>
 </body>

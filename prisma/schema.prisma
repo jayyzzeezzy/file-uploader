@@ -43,7 +43,7 @@ model File {
   ownership   User     @relation(fields: [ownershipId], references: [id]) // pk: user(homepage), fk: files
   ownershipId Int
   folder      Folder?  @relation(fields: [folderId], references: [id]) // pk: folder, fk: childFiles
-  folderId    String
+  folderId    String?
 
   @@map("file")
 }

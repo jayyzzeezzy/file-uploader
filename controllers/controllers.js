@@ -63,10 +63,10 @@ exports.getHome = async (req, res) => {
     res.render("home", { results: folders });
 }
 
-exports.postUpload = async (req, res) => {
+exports.postUploadHome = async (req, res) => {
     const file = req.file;
-    console.log(`uploaded file: ${req.file}`);
-    res.render("home");
+    console.log(`uploaded file: ${file}`);
+    res.redirect("/home");
 };
 
 exports.getNewFolder = async (req, res) => {

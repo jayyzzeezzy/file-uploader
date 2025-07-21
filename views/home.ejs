@@ -24,8 +24,16 @@
           <% if (locals.results) {%>
             <div class="folder-container">
               <% results.forEach((folder) => { %>
-                <%- include("ownerFiles", {folder: folder}); %>
+                <%- include("ownerFolders", {folder: folder}); %>
               <% }) %>
+            </div>
+          <%}%>
+
+          <% if (locals.files) {%>
+            <div class="file-container">
+              <% files.forEach((file) => { %>
+                <%- include("homeFiles", {file: file}); %>
+              <%})%>
             </div>
           <%}%>
         </div>

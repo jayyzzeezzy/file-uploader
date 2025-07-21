@@ -58,9 +58,9 @@ exports.getSignUp = (req, res) => {
 
 exports.getHome = async (req, res) => {
     const userId = req.user.id;
-    // const files = await db.readHomeFiles(userId);
+    const files = await db.readFiles(userId);
     const folders = await db.readHomeFolders(userId);
-    res.render("home", { results: folders });
+    res.render("home", { results: folders, files });
 }
 
 exports.postUploadHome = async (req, res) => {
@@ -98,6 +98,7 @@ exports.getFolderInfo = async (req, res) => {
     const currentFolder = await db.readFolder(userId, folderId);
     const folderPath = await db.getFolderPath(userId, folderId);
     const folders = await db.readParentChildFolders(userId, folderId);
+    const files = await db.readFiles(userId, folderId);
     // console.log("folderPath: ", folderPath);
     // console.log("parentChildFolders: ", folders);
     res.render("folder", {
@@ -105,6 +106,7 @@ exports.getFolderInfo = async (req, res) => {
         folderId,
         folderPath,
         currentFolder,
+        files,
     });
 }
 

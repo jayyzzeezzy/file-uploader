@@ -34,6 +34,14 @@
               <% }) %>
             </div>
           <%}%>
+
+          <% if (locals.files) {%>
+            <div class="file-container">
+              <% files.forEach((file) => { %>
+                <%- include("folderFiles", {file: file}); %>
+              <%})%>
+            </div>
+          <%}%>
         </div>
       </main>
     </div>

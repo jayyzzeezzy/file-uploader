@@ -219,3 +219,17 @@ exports.addAFile = async (filename, originalName, fileType, path, userId, folder
     console.log("added file: ", file);
     return file;
 }
+
+exports.readFiles = async (userId, folderId = null) => {
+    const files = await prisma.file.findMany({
+        where: {
+            ownershipId: userId,
+            folderId: folderId,
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+    // console.log(files);
+    return files;
+}

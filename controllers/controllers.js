@@ -135,6 +135,15 @@ exports.postDeleteFolder = async (req, res) => {
     res.redirect("/home");
 }
 
+exports.getFile = async (req, res) => {
+    const userId = req.user.id;
+    const { fileId } = req.params;
+    const file = await db.selectAFile(userId, fileId);
+    const folderId = file.folderId || null;
+    const filePath = await db.getFolderPath(userId, folderId);
+    res.render("file", { file, filePath });
+}
+
 exports.getLogOut = (req, res, next) => {
     req.logout((err) => {
         if (err) {

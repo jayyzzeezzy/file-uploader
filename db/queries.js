@@ -233,3 +233,13 @@ exports.readFiles = async (userId, folderId = null) => {
     // console.log(files);
     return files;
 }
+
+exports.selectAFile = async (userId, fileId) => {
+    const file = await prisma.file.findFirst({
+        where: {
+            ownershipId: userId,
+            id: fileId,
+        },
+    });
+    return file;
+}

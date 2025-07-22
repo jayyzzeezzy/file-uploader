@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/script.js"></script>
+  <title><%= file.originalName %></title>
+</head>
+<body>
+  <div class="home-container">
+    <header class="header">File Name</header>
+
+    <div class="home-layout">
+      <aside class="aside">
+        <%- include("sidebarFile"); %>
+      </aside>
+
+      <main class="main">
+        <nav class="navFile">
+          <a href="/home"><%= currentUser.username %></a>
+          <% if (filePath) { %>
+            <% filePath.forEach((folder) => { %>
+              <img class="next-pointer" src="/next-pointer.svg" alt="">
+              <a href="/folder/<%= folder.id %>"><%= folder.name %></a>
+            <% }) %>
+          <% } %>
+          <img class="next-pointer" src="/next-pointer.svg" alt="">
+          <a href="/file/<%= file.id %>"><%= file.originalName %></a>
+        </nav>
+        <div class="fileDetails">
+          <% if (locals.file) {%>
+            <div class="file-container">
+              <p>Name: <%= file.originalName %></p>
+              <p>Type: <%= file.fileType %></p>
+              <p>Created: <%= file.createdAt %></p>
+            </div>
+          <%}%>
+        </div>
+      </main>
+    </div>
+    
+  </div>
+
+  <!-- <dialog class="deleteModal" id="deleteModal">
+    <form action="/delete/<%= file.id %>" method="post">
+      <p class="deleteMessage">Are you sure you want to delete this?</p>
+      <button type="button" class="cancelDeleteBtn">Cancel</button>
+      <input type="submit" value="Confirm" class="deleteBtn">
+    </form>
+  </dialog> -->
+</body>
+</html>

@@ -152,3 +152,17 @@ exports.getLogOut = (req, res, next) => {
         res.redirect("/");
     });
 };
+
+exports.postRemoveFile = async (req, res) => {
+    const userId = req.user.id;
+    const { fileId } = req.params;
+    const folder = await db.selectAFile(userId, fileId);
+    const folderId = folder.folderId || null;
+    console.log("parent folder id: ", folderId);
+    await db.postRemoveFile(userId, fileId);
+    if (folderId) {
+        res.redirect(`/folder/${folderId}`);
+    } else {
+        res.redirect("/home");
+    }
+}

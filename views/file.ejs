@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles.css">
-  <script defer src="/script.js"></script>
+  <script defer src="/fileScript.js"></script>
   <title><%= file.originalName %></title>
 </head>
 <body>
@@ -42,12 +42,12 @@
     
   </div>
 
-  <!-- <dialog class="deleteModal" id="deleteModal">
-    <form action="/delete/<%= file.id %>" method="post">
+  <dialog class="deleteFileModal" id="deleteFileModal">
+    <form action="/delete/file/<%= file.id %>" method="post">
       <p class="deleteMessage">Are you sure you want to delete this?</p>
-      <button type="button" class="cancelDeleteBtn">Cancel</button>
-      <input type="submit" value="Confirm" class="deleteBtn">
+      <button type="button" class="cancelFileDelete">Cancel</button>
+      <input type="submit" value="Confirm" class="confirmFileDelete">
     </form>
-  </dialog> -->
+  </dialog>
 </body>
 </html>

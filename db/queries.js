@@ -188,7 +188,24 @@ exports.deleteFolder = async (userId, folderId, array = []) => {
     );
 
     if (folderId === array[0]) {
+        const files =  await prisma.file.findMany({
+            where: {
+                ownershipId: userId,
+                folderId: {
+                    in: array,
+                },
+            },
+        });
+
         await prisma.$transaction(async (tx) => {
+            await Promise.all(files.map((file) => 
+                tx.file.delete({
+                    where: {
+                        id: file.id,
+                    },
+                })
+            ));
+
             await tx.folder.deleteMany({
                 where: {
                   id: {
@@ -242,4 +259,14 @@ exports.selectAFile = async (userId, fileId) => {
         },
     });
     return file;
+}
+
+exports.postRemoveFile = async (userId, fileId) => {
+    const removed = await prisma.file.delete({
+        where: {
+            ownershipId: userId,
+            id: fileId,
+        },
+    });
+    console.log("removed: ", removed);
 }

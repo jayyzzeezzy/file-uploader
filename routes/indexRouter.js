@@ -16,5 +16,6 @@ indexRouter.post("/new-folder/:folderId", isAuthenticated, controllers.postFolde
 indexRouter.post("/rename/:folderId", isAuthenticated, controllers.postRenameFolder);
 indexRouter.post("/delete/:folderId", isAuthenticated, controllers.postDeleteFolder);
 indexRouter.get("/file/:fileId", isAuthenticated, controllers.getFile);
+indexRouter.post("/delete/file/:fileId", isAuthenticated, controllers.postRemoveFile);
 
 module.exports = indexRouter;

@@ -2,6 +2,10 @@
     display: flex;
 }
 
+.main {
+    flex-grow: 1;
+}
+
 .sidebarButtons {
     display: flex;
     flex-direction: column;

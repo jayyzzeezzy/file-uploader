@@ -1,4 +1,5 @@
 require("dotenv").config();
+const supabase = require("../supabase/supabaseQueries");
 const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
@@ -68,6 +69,7 @@ exports.postUploadHome = async (req, res) => {
     const { filename, originalname, mimetype, path } = req.file;
     console.log("uploaded file to home: ", req.file);
     const add = db.addAFile(filename, originalname, mimetype, path, userId);
+    const { data, error } = await supabase.uploadToStorage(path, req.file);
     res.redirect("/home");
 };
 
@@ -77,6 +79,7 @@ exports.postUploadFolder = async (req, res) => {
     const { filename, originalname, mimetype, path } = req.file;
     console.log("uploaded file to folder: ", req.file);
     const add = db.addAFile(filename, originalname, mimetype, path, userId, folderId);
+    const { data, error } = await supabase.uploadToStorage(path, req.file);
     res.redirect(`/folder/${folderId}`);
 }
 

@@ -222,13 +222,14 @@ exports.deleteFolder = async (userId, folderId, array = []) => {
 /*
 * ---------------- file queries ---------------------------
 */
-exports.addAFile = async (filename, originalName, fileType, path, userId, folderId = null) => {
+exports.addAFile = async (inputName, fileName, fileType, size, publicUrl, userId, folderId = null) => {
     const file = await prisma.file.create({
         data: {
-            name: filename,
-            originalName: originalName,
+            inputName: inputName,
+            fileName: fileName,
             fileType: fileType,
-            path: path,
+            size: size,
+            publicUrl: publicUrl,
             ownershipId: userId,
             folderId: folderId,
         },
@@ -256,6 +257,16 @@ exports.selectAFile = async (userId, fileId) => {
         where: {
             ownershipId: userId,
             id: fileId,
+        },
+    });
+    return file;
+}
+
+exports.findDuplicateFile = async (userId, filename) => {
+    const file = await prisma.file.findFirst({
+        where: {
+            ownershipId: userId,
+            fileName: filename,
         },
     });
     return file;

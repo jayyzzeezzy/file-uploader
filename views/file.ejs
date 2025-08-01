@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles.css">
   <script defer src="/fileScript.js"></script>
-  <title><%= file.originalName %></title>
+  <title><%= file.fileName %></title>
 </head>
 <body>
   <div class="home-container">
@@ -26,13 +26,14 @@
             <% }) %>
           <% } %>
           <img class="next-pointer" src="/next-pointer.svg" alt="">
-          <a href="/file/<%= file.id %>"><%= file.originalName %></a>
+          <a href="/file/<%= file.id %>"><%= file.fileName %></a>
         </nav>
         <div class="fileDetails">
           <% if (locals.file) {%>
             <div class="file-container">
-              <p>Name: <%= file.originalName %></p>
+              <p>Name: <%= file.fileName %></p>
               <p>Type: <%= file.fileType %></p>
+              <p>Size: <%= file.size %> bytes</p>
               <p>Created: <%= file.createdAt %></p>
             </div>
           <%}%>

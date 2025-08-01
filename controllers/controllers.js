@@ -66,20 +66,55 @@ exports.getHome = async (req, res) => {
 
 exports.postUploadHome = async (req, res) => {
     const userId = req.user.id;
-    const { filename, originalname, mimetype, path } = req.file;
-    console.log("uploaded file to home: ", req.file);
-    const add = db.addAFile(filename, originalname, mimetype, path, userId);
-    const { data, error } = await supabase.uploadToStorage(path, req.file, mimetype);
+    const { fieldname, originalname, mimetype, size, buffer } = req.file;
+    // console.log("uploaded file to home: ", req.file);
+    // find duplicate file names
+    const duplicateFile = await db.findDuplicateFile(userId, originalname);
+    let fileName = '';
+    if (duplicateFile) {
+        fileName = this.makeRandomId(5) + "_" + originalname;
+    } else {
+        fileName = originalname;
+    }
+    const { data, error } = await supabase.uploadToStorage(fileName, buffer, mimetype);
+    const { publicUrl } = await supabase.getPublicUrl(fileName);
+    // console.log("publicUrl: ", publicUrl);
+    const add = await db.addAFile(
+        fieldname, 
+        fileName, 
+        mimetype, 
+        size.toString(), 
+        publicUrl, 
+        userId
+    );
     res.redirect("/home");
 };
 
 exports.postUploadFolder = async (req, res) => {
     const userId = req.user.id;
     const { folderId } = req.params;
-    const { filename, originalname, mimetype, path } = req.file;
-    console.log("uploaded file to folder: ", req.file);
-    const add = db.addAFile(filename, originalname, mimetype, path, userId, folderId);
-    const { data, error } = await supabase.uploadToStorage(path, req.file, mimetype);
+    const { fieldname, originalname, mimetype, size, buffer } = req.file;
+    // console.log("uploaded file to folder: ", req.file);
+    // find duplicate file names
+    const duplicateFile = await db.findDuplicateFile(userId, originalname);
+    let fileName = '';
+    if (duplicateFile) {
+        fileName = this.makeRandomId(5) + "_" + originalname;
+    } else {
+        fileName = originalname;
+    }
+    const { data, error } = await supabase.uploadToStorage(fileName, buffer, mimetype);
+    const { publicUrl } = await supabase.getPublicUrl(fileName);
+    // console.log("publicUrl: ", publicUrl);
+    const add = await db.addAFile(
+        fieldname, 
+        fileName, 
+        mimetype, 
+        size.toString(), 
+        publicUrl, 
+        userId,
+        folderId
+    );
     res.redirect(`/folder/${folderId}`);
 }
 
@@ -118,7 +153,7 @@ exports.postFolderToFolder = async (req, res) => {
     const { folderId } = req.params;
     const { folderName } = req.body;
     const folder = await db.addFolderToFolder(folderName, userId, folderId);
-    console.log("addFolderToFolder: ", folder);
+    // console.log("addFolderToFolder: ", folder);
     res.redirect(`/folder/${folderId}`);
 }
 
@@ -127,7 +162,7 @@ exports.postRenameFolder = async (req, res) => {
     const { folderId } = req.params;
     const { newName } = req.body;
     const folder = await db.renameFolder(userId, folderId, newName);
-    console.log("renamed folder: ", folder);
+    // console.log("renamed folder: ", folder);
     res.redirect(`/folder/${folderId}`);
 }
 
@@ -161,7 +196,7 @@ exports.postRemoveFile = async (req, res) => {
     const { fileId } = req.params;
     const folder = await db.selectAFile(userId, fileId);
     const folderId = folder.folderId || null;
-    console.log("parent folder id: ", folderId);
+    // console.log("parent folder id: ", folderId);
     await db.postRemoveFile(userId, fileId);
     if (folderId) {
         res.redirect(`/folder/${folderId}`);
@@ -170,14 +205,12 @@ exports.postRemoveFile = async (req, res) => {
     }
 }
 
-exports.getDownloadFile = async (req, res) => {
-    const userId = req.user.id;
-    const { fileId } = req.params;
-    const file = await db.selectAFile(userId, fileId);
-    const filePath = './uploads/' + file.name;
-    res.download(filePath, file.originalName, (err) => {
-        if (err) {
-            console.error("File download failed: ", err);
-        }
-    });
+exports.makeRandomId = (length) => {
+    let result           = '';
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }

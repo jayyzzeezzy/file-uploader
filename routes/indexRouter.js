@@ -3,7 +3,8 @@ const controllers = require("../controllers/controllers");
 const { isAuthenticated } = require("../controllers/controllers");
 const indexRouter = Router();
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 indexRouter.get("/", controllers.getIndex);
 indexRouter.get("/home", isAuthenticated, controllers.getHome);
@@ -17,6 +18,5 @@ indexRouter.post("/rename/:folderId", isAuthenticated, controllers.postRenameFol
 indexRouter.post("/delete/:folderId", isAuthenticated, controllers.postDeleteFolder);
 indexRouter.get("/file/:fileId", isAuthenticated, controllers.getFile);
 indexRouter.post("/delete/file/:fileId", isAuthenticated, controllers.postRemoveFile);
-indexRouter.get("/download/:fileId", isAuthenticated, controllers.getDownloadFile);
 
 module.exports = indexRouter;

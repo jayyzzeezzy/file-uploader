@@ -66,6 +66,10 @@ exports.getHome = async (req, res) => {
 
 exports.postUploadHome = async (req, res) => {
     const userId = req.user.id;
+    if (!req.file) {
+        res.status(404).send("File not found");
+        return;
+    }
     const { fieldname, originalname, mimetype, size, buffer } = req.file;
     // console.log("uploaded file to home: ", req.file);
     // find duplicate file names
@@ -93,6 +97,10 @@ exports.postUploadHome = async (req, res) => {
 exports.postUploadFolder = async (req, res) => {
     const userId = req.user.id;
     const { folderId } = req.params;
+    if (!req.file) {
+        res.status(404).send("File not found");
+        return;
+    }
     const { fieldname, originalname, mimetype, size, buffer } = req.file;
     // console.log("uploaded file to folder: ", req.file);
     // find duplicate file names

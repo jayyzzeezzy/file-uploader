@@ -279,5 +279,5 @@ exports.postRemoveFile = async (userId, fileId) => {
             id: fileId,
         },
     });
-    console.log("removed: ", removed);
+    console.log("removed: ", removed.fileName);
 }

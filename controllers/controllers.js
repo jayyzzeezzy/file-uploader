@@ -194,10 +194,15 @@ exports.getLogOut = (req, res, next) => {
 exports.postRemoveFile = async (req, res) => {
     const userId = req.user.id;
     const { fileId } = req.params;
-    const folder = await db.selectAFile(userId, fileId);
-    const folderId = folder.folderId || null;
+    const file = await db.selectAFile(userId, fileId);
+    const folderId = file.folderId || null;
     // console.log("parent folder id: ", folderId);
     await db.postRemoveFile(userId, fileId);
+    const { data, error } = await supabase.deleteFromStorage(file.fileName);
+    if (error) {
+        throw error;
+    }
+    // choose a page to redirect to
     if (folderId) {
         res.redirect(`/folder/${folderId}`);
     } else {

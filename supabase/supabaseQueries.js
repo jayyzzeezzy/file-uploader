@@ -14,3 +14,10 @@ exports.getPublicUrl = async (fileName) => {
         .getPublicUrl(fileName, { download: true })
     return data;
 }
+
+exports.deleteFromStorage = async (fileName) => {
+    const { data, error } = await supabase.storage
+        .from('uploads')
+        .remove([fileName])
+    return { data, error };
+}

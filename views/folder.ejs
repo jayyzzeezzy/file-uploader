@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="home-container">
-    <header class="header">Folder Names</header>
+    <header class="header">Current foler: <%= currentFolder.name %></header>
 
     <div class="home-layout">
       <aside class="aside">
@@ -50,7 +50,7 @@
 
   <dialog class="newfolderModal" id="newfolderModal">
     <form action="/new-folder/<%= folderId %>" method="post">
-      <label for="folderName" class="modal-message">New folder</label>
+      <label for="folderName" class="modal-message">New folder:</label>
       <input type="text" id="folderName" name="folderName" value="new folder">
       <button type="button" class="cancelNewFolderBtn">Cancel</button>
       <input type="submit" value="Create" class="createBtn">
@@ -68,7 +68,7 @@
 
   <dialog class="renameModal" id="renameModal">
     <form action="/rename/<%= folderId %>" method="post">
-      <label for="newName" class="modal-message">Rename</label>
+      <label for="newName" class="modal-message">Rename:</label>
       <input type="text" id="newName" name="newName" value="<%= currentFolder.name %>">
       <button type="button" class="cancelRenameBtn">Cancel</button>
       <input type="submit" value="Rename" class="renameBtn">

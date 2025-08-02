@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="home-container">
-    <header class="header">File Uploader</header>
+    <header class="header">Home Page</header>
 
     <div class="home-layout">
       <aside class="aside">
@@ -24,7 +24,7 @@
           <% if (locals.results) {%>
             <div class="folder-container">
               <% results.forEach((folder) => { %>
-                <%- include("ownerFolders", {folder: folder}); %>
+                <%- include("homeFolders", {folder: folder}); %>
               <% }) %>
             </div>
           <%}%>
@@ -44,7 +44,7 @@
 
   <dialog class="newfolderModal" id="newfolderModal">
     <form action="/new-folder" method="post">
-      <label for="folderName" class="modal-message">New folder</label>
+      <label for="folderName" class="modal-message">New folder:</label>
       <input type="text" id="folderName" name="folderName" value="new folder">
       <button type="button" class="cancelNewFolderBtn">Cancel</button>
       <input type="submit" value="Create" class="createBtn">
